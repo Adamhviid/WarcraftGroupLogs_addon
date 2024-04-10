@@ -76,7 +76,7 @@ local function showWindow()
 
     -- Create the URL
     local url = "https://warcraftgrouplogs.onrender.com/?server=" .. realm .. "&region=" .. region ..
-                    "&zone=2008&characters=" .. table.concat(members, ", ")
+                    "&zone=2009&characters=" .. table.concat(members, ", ")
 
     linkEditBox:SetText(url)
     linkFrame:Show()
