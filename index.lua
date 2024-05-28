@@ -75,7 +75,7 @@ local function showWindow()
     local region = ({"US", "KR", "EU", "TW", "CN"})[GetCurrentRegion()]
 
     -- Create the URL
-    local url = "https://warcraftgrouplogs.onrender.com/?server=" .. realm .. "&region=" .. region ..
+    local url = "https://warcraftgrouplogs.com/?version=sod&server=" .. realm .. "&region=" .. region ..
                     "&zone=2009&characters=" .. table.concat(members, ", ")
 
     linkEditBox:SetText(url)
