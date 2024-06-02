@@ -1,0 +1,11 @@
+## Interface: 40300
+## Title: WarcraftGroupLogs
+## Notes: Addon for website WarcraftGroupLogs.com, get warcraftlogs for your whole group at once.
+## Author: NumberOnePlayerKillerHero
+## Version: 1.21
+
+# Libraries
+Libs\Libs.xml
+
+# Addon files
+index.lua

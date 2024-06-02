@@ -2,7 +2,7 @@
 ## Title: WarcraftGroupLogs
 ## Notes: Addon for website WarcraftGroupLogs.onrender.com, get warcraftlogs for your whole group at once.
 ## Author: NumberOnePlayerKillerHero
-## Version: 1.1
+## Version: 1.2
 
 # Libraries
 Libs\Libs.xml

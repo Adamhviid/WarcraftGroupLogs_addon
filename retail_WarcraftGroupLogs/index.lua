@@ -74,9 +74,12 @@ local function showWindow()
     realm = realm:gsub(" ", "-")
     local region = ({"US", "KR", "EU", "TW", "CN"})[GetCurrentRegion()]
 
+    local version = "retail"
+    local zone = "35"
+
     -- Create the URL
-    local url = "https://warcraftgrouplogs.com/?version=sod&server=" .. realm .. "&region=" .. region ..
-                    "&zone=2009&characters=" .. table.concat(members, ", ")
+    local url = "https://warcraftgrouplogs.com/?version=" .. version .. "&server=" .. realm .. "&region=" .. region ..
+                    "&zone=" .. zone .. "&characters=" .. table.concat(members, ", ")
 
     linkEditBox:SetText(url)
     linkFrame:Show()
