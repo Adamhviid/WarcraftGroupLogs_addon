@@ -6,7 +6,7 @@ local linkFrame = CreateFrame("Frame", "LinkFrame", UIParent, "BasicFrameTemplat
 linkFrame.title = linkFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 linkFrame.title:SetPoint("CENTER", linkFrame.TitleBg, "CENTER", 5, 0)
 linkFrame.title:SetText("Warcraft Group Logs")
-linkFrame:SetSize(565, 150)
+linkFrame:SetSize(600, 200)
 linkFrame:SetPoint("CENTER")
 linkFrame:Hide()
 
@@ -14,8 +14,8 @@ table.insert(UISpecialFrames, "LinkFrame")
 
 -- Create the linkEditBox
 local linkEditBox = CreateFrame("EditBox", nil, linkFrame, "InputBoxTemplate")
-linkEditBox:SetSize(500, 100)
-linkEditBox:SetPoint("CENTER", linkFrame, "BOTTOM", 0, 50)
+linkEditBox:SetSize(500, 200)
+linkEditBox:SetPoint("CENTER", linkFrame, "BOTTOM", 0, 70)
 linkEditBox:SetAutoFocus(false)
 linkEditBox:SetMultiLine(true)
 linkEditBox:SetMaxLetters(99999)
@@ -23,7 +23,7 @@ linkEditBox:SetScript("OnEscapePressed", linkEditBox.ClearFocus)
 
 local copiedText = linkFrame:CreateFontString(nil, "OVERLAY")
 copiedText:SetFontObject("GameFontHighlight")
-copiedText:SetPoint("TOP", linkEditBox, "BOTTOM", 0, -10)
+copiedText:SetPoint("TOP", linkEditBox, "BOTTOM", 0, -5)
 copiedText:SetText("")
 copiedText:Hide()
 
@@ -48,11 +48,17 @@ descriptionText:SetText(
 
 local function showWindow()
     local members = {}
+    local version = "classic"
+    local zone
+    local raidDifficulty = GetRaidDifficultyID()
+    local dungeonDifficulty = GetDungeonDifficultyID()
+    local difficulty
 
     if IsInRaid() then
         for i = 1, GetNumGroupMembers() do
             local name = GetRaidRosterInfo(i)
             if name and type(name) == "string" then
+                name = trimName(name)
                 table.insert(members, name)
             end
         end
@@ -60,12 +66,14 @@ local function showWindow()
         for i = 1, GetNumSubgroupMembers() do
             local name = UnitName("party" .. i)
             if name and type(name) == "string" then
+                name = trimName(name)
                 table.insert(members, name)
             end
         end
 
         local playerName = UnitName("player")
         if playerName and type(playerName) == "string" then
+            playerName = trimName(playerName)
             table.insert(members, playerName)
         end
     end
@@ -74,12 +82,21 @@ local function showWindow()
     realm = realm:gsub(" ", "-")
     local region = ({"US", "KR", "EU", "TW", "CN"})[GetCurrentRegion()]
 
-    local version = "classic"
-    local zone = "1023"
+    if #members > 5 then
+        if raidDifficulty == 14 then -- Normal Raid
+            zone = 1023
+            difficulty = 3
+        elseif raidDifficulty == 15 then -- Heroic Raid
+            zone = 1023
+            difficulty = 4
+        else
+            zone = 1023 -- Default for other raid difficulties
+        end
+    end
 
     -- Create the URL
     local url = "https://warcraftgrouplogs.com/?version=" .. version .. "&server=" .. realm .. "&region=" .. region ..
-                    "&zone=" .. zone .. "&characters=" .. table.concat(members, ", ")
+                    "&zone=" .. zone .. "&difficulty=" .. difficulty .. "&characters=" .. table.concat(members, ", ")
 
     linkEditBox:SetText(url)
     linkFrame:Show()
@@ -109,4 +126,3 @@ LDBIcon:Register("WarcraftGroupLogs", myBroker, {})
 
 -- Show the minimap button
 LDBIcon:Show("WarcraftGroupLogs")
-
