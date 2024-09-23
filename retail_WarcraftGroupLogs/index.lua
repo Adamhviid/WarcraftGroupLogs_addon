@@ -54,15 +54,10 @@ local function showWindow()
     local dungeonDifficulty = GetDungeonDifficultyID()
     local difficulty
 
-    local function trimName(name)
-        return string.match(name, "^[^-]+")
-    end
-
     if IsInRaid() then
         for i = 1, GetNumGroupMembers() do
             local name = GetRaidRosterInfo(i)
             if name and type(name) == "string" then
-                name = trimName(name)
                 table.insert(members, name)
             end
         end
@@ -70,14 +65,12 @@ local function showWindow()
         for i = 1, GetNumSubgroupMembers() do
             local name = UnitName("party" .. i)
             if name and type(name) == "string" then
-                name = trimName(name)
                 table.insert(members, name)
             end
         end
 
         local playerName = UnitName("player")
         if playerName and type(playerName) == "string" then
-            playerName = trimName(playerName)
             table.insert(members, playerName)
         end
     end
